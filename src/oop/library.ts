@@ -14,6 +14,16 @@ interface IUser {
     books_returned: number
 }
 
+class Book {
+    constructor(public id: number, public title: string, public author: string, public quantity: number) {}
+}
+
+class Member {
+    books_borrowed: number = 0
+    books_returned: number = 0
+    constructor(public id: number, public name: string, public age: number) {}
+}
+
 abstract class Library {
     protected books: IBook[] = []
     protected members: IUser[] = []
@@ -21,18 +31,12 @@ abstract class Library {
     private library_id = 0
     private book_id = 0
 
-    protected addMember(name: string, age: number): IUser {
-        const newLibraryMember: IUser = {
-            id: ++this.library_id,
-            name: name.trim().toLowerCase(),
-            age: age,
-            books_borrowed: 0,
-            books_returned: 0
-        }
+    protected addMember(name: string, age: number): Member {
+        const newLibraryMember = new Member(++this.library_id, name.trim().toLowerCase(), age)
+        
         this.members.push(newLibraryMember)
-
+        
         console.log(`A new member ID-${this.library_id} has been added successfully!.`)
-
         return newLibraryMember;
     }
 
@@ -42,15 +46,9 @@ abstract class Library {
         console.log(`Library member ID-${id} has been removed successfully`)
     }
 
-    protected addBook(title: string, author: string, quantity: number): IBook {
+    protected addBook(title: string, author: string, quantity: number): Book {
         //
-        const newBook: IBook = {
-            id: ++this.book_id,
-            title,
-            author,
-            quantity
-        }
-
+        const newBook = new Book(++this.book_id, title, author,quantity)
         this.books.push(newBook)
 
         console.log(`New book '${title}' has been added to the library's book collection`)

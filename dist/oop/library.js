@@ -1,4 +1,21 @@
 "use strict";
+class Book {
+    constructor(id, title, author, quantity) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.quantity = quantity;
+    }
+}
+class Member {
+    constructor(id, name, age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.books_borrowed = 0;
+        this.books_returned = 0;
+    }
+}
 class Library {
     constructor() {
         this.books = [];
@@ -7,13 +24,7 @@ class Library {
         this.book_id = 0;
     }
     addMember(name, age) {
-        const newLibraryMember = {
-            id: ++this.library_id,
-            name: name.trim().toLowerCase(),
-            age: age,
-            books_borrowed: 0,
-            books_returned: 0
-        };
+        const newLibraryMember = new Member(++this.library_id, name.trim().toLowerCase(), age);
         this.members.push(newLibraryMember);
         console.log(`A new member ID-${this.library_id} has been added successfully!.`);
         return newLibraryMember;
@@ -23,12 +34,7 @@ class Library {
         console.log(`Library member ID-${id} has been removed successfully`);
     }
     addBook(title, author, quantity) {
-        const newBook = {
-            id: ++this.book_id,
-            title,
-            author,
-            quantity
-        };
+        const newBook = new Book(++this.book_id, title, author, quantity);
         this.books.push(newBook);
         console.log(`New book '${title}' has been added to the library's book collection`);
         return newBook;
