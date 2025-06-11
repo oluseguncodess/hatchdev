@@ -77,4 +77,22 @@ class SinglyLinkedList<T> {
     // return the value of the old node
     return removedHeadNodeValue;
   }
+
+  unshift(value: T): this {
+    // create a new node 
+    let newNode = new LNode(value);
+
+    // check if the linked list is empty
+    if(!this.head) {
+      this.head = newNode
+      this.tail = newNode
+    } else {
+      // set the new node next property to the current head node
+      newNode.next = this.head
+      // set the head propery to the new node created
+      this.head = newNode
+    };
+    this.length++
+    return this
+  }
 }
