@@ -1,26 +1,26 @@
 class LNode<T> {
-    value: T
-    next: LNode<T> | null = null
-    constructor(value: T) {
-        this.value = value
-    }
+  value: T
+  next: LNode<T> | null = null
+  constructor(value: T) {
+    this.value = value
+  }
 }
 
 class SinglyLinkedList<T> {
-    head: LNode<T> | null = null
-    tail: LNode<T> | null = null
-    length: number = 0
+  head: LNode<T> | null = null
+  tail: LNode<T> | null = null
+  length: number = 0
 
-    constructor(initialValue?: T) {
-        if (initialValue != undefined) {
-            const newNode = new LNode<T>(initialValue)
-            this.head = newNode
-            this.tail = newNode
-            this.length = 1
-        }
+  constructor(initialValue?: T) {
+    if (initialValue != undefined) {
+      const newNode = new LNode<T>(initialValue)
+      this.head = newNode
+      this.tail = newNode
+      this.length = 1
     }
+  }
 
-    push(value: T): this {
+  push(value: T): this {
     if (!this.head) {
       const newNode = new LNode<T>(value)
       this.head = newNode
@@ -83,7 +83,7 @@ class SinglyLinkedList<T> {
     let newNode = new LNode(value);
 
     // check if the linked list is empty
-    if(!this.head) {
+    if (!this.head) {
       this.head = newNode
       this.tail = newNode
     } else {
@@ -98,14 +98,29 @@ class SinglyLinkedList<T> {
 
   get(index: number): T | undefined {
     // check if we have the right index and if the index isn't greater than the length of the linked list
-    if(index < 0 || index >= this.length) return undefined;
-    
+    if (index < 0 || index >= this.length) return undefined;
+
     let counter = 0;
     let current = this.head
-    while(counter < index) {
+    while (counter < index) {
       current = current!.next
       counter++
     }
     return current!.value;
+  }
+
+  set(index: number, value: T): undefined | this {
+    // check for a valid index
+    if (index < 0 || index >= this.length) return undefined;
+
+    let counter = 0
+    let current = this.head
+    while (counter < index) {
+      current = current!.next
+      counter++
+    }
+
+    current!.value = value
+    return this;
   }
 }
