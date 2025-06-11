@@ -95,4 +95,17 @@ class SinglyLinkedList<T> {
     this.length++
     return this
   }
+
+  get(index: number): T | undefined {
+    // check if we have the right index and if the index isn't greater than the length of the linked list
+    if(index < 0 || index >= this.length) return undefined;
+    
+    let counter = 0;
+    let current = this.head
+    while(counter < index) {
+      current = current!.next
+      counter++
+    }
+    return current!.value;
+  }
 }
