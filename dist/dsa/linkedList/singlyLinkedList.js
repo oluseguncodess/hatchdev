@@ -51,4 +51,18 @@ class SinglyLinkedList {
         this.length--;
         return poppedValue;
     }
+    shift() {
+        if (this.length === 0)
+            return undefined;
+        let removedHeadNodeValue = this.head.value;
+        if (this.length === 1) {
+            this.head = null;
+            this.tail = null;
+        }
+        else {
+            this.head = this.head.next;
+        }
+        this.length--;
+        return removedHeadNodeValue;
+    }
 }

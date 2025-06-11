@@ -1,7 +1,7 @@
 class LNode<T> {
     value: T
     next: LNode<T> | null = null
-    constructor(value: any) {
+    constructor(value: T) {
         this.value = value
     }
 }
@@ -55,5 +55,26 @@ class SinglyLinkedList<T> {
     }
     this.length--
     return poppedValue;
+  }
+
+  shift(): T | undefined {
+    // check if the linked list is empty 
+    if (this.length === 0) return undefined;
+
+    // save the value of the head's node
+    let removedHeadNodeValue = this.head!.value
+
+    // check if the linked list has only one node
+    if (this.length === 1) {
+      this.head = null
+      this.tail = null
+    } else {
+      // assign the head property to the head's next node
+      this.head = this.head!.next
+    }
+    // decrement length
+    this.length--
+    // return the value of the old node
+    return removedHeadNodeValue;
   }
 }
