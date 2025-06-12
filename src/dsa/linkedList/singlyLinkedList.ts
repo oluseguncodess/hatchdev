@@ -123,4 +123,36 @@ class SinglyLinkedList<T> {
     current!.value = value
     return this;
   }
+
+  insert(index: number, value: T) {
+    if (index < 0 || index > this.length) return false;
+
+    // if index is 0
+    if (index === 0) {
+      this.unshift(value)
+      return true;
+    }
+
+    // if it's the last index of the linked list
+    if (index === this.length) {
+      this.push(value)
+      return true
+    }
+
+    // create a new node
+    const newNode = new LNode<T>(value)
+
+    let counter = 0;
+    let current = this.head
+    while (counter < index - 1) {
+      current = current!.next
+      counter++
+    }
+    newNode.next = current!.next
+    current!.next = newNode
+
+    // increment length
+    this.length++
+    return true;
+  }
 }

@@ -102,4 +102,27 @@ class SinglyLinkedList {
         current.value = value;
         return this;
     }
+    insert(index, value) {
+        if (index < 0 || index > this.length)
+            return false;
+        if (index === 0) {
+            this.unshift(value);
+            return true;
+        }
+        if (index === this.length) {
+            this.push(value);
+            return true;
+        }
+        const newNode = new LNode(value);
+        let counter = 0;
+        let current = this.head;
+        while (counter < index - 1) {
+            current = current.next;
+            counter++;
+        }
+        newNode.next = current.next;
+        current.next = newNode;
+        this.length++;
+        return true;
+    }
 }
