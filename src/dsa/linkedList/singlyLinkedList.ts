@@ -96,7 +96,7 @@ class SinglyLinkedList<T> {
     return this
   }
 
-  get(index: number): T | undefined {
+  get(index: number): LNode<T> | undefined | null {
     // check if we have the right index and if the index isn't greater than the length of the linked list
     if (index < 0 || index >= this.length) return undefined;
 
@@ -106,7 +106,7 @@ class SinglyLinkedList<T> {
       current = current!.next
       counter++
     }
-    return current!.value;
+    return current
   }
 
   set(index: number, value: T): undefined | this {
@@ -154,5 +154,39 @@ class SinglyLinkedList<T> {
     // increment length
     this.length++
     return true;
+  }
+
+  remove(index: number) {
+    // check if index exists
+    if (index < 0 || index >= this.length) return undefined;
+
+    // check if index is 0
+    if(index === 0) {
+      return this.shift()
+    }
+
+    // check if the index is the last index
+    if(index === this.length - 1) {
+     return this.pop()
+    }
+
+    // get the node before the node we want to remove
+    let prevNode = this.get(index - 1)
+    
+    // get the removed node 
+    const removedNode = prevNode!.next
+
+    // link the prevNode to the node that's after the removed node
+    prevNode!.next = removedNode!.next
+
+    // unlink the removed node
+    removedNode!.next = null
+
+    // decrease length of linked list
+    this.length--
+
+    // return removed node value
+    return removedNode!.value
+    
   }
 }
