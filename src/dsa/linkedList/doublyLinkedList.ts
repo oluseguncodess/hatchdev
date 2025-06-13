@@ -1,6 +1,6 @@
 class Nodez<T> {
   value: T
-  next: Nodez<T> | null  = null
+  next: Nodez<T> | null = null
   prev: Nodez<T> | null = null
   constructor(value: T) {
     this.value = value
@@ -20,6 +20,7 @@ class DoublyLinkedList<T> {
     }
   }
 
+  // adds a node to the beginning of list
   append(val: T): this {
     // create a new node
     const newNode = new Nodez<T>(val)
@@ -46,7 +47,8 @@ class DoublyLinkedList<T> {
     return this;
   }
 
-  pop(): Nodez<T> | undefined{
+  // removes the last node
+  pop(): T | undefined {
     // check to see if the list is empty
     if (this.length === 0) {
       return undefined
@@ -56,13 +58,13 @@ class DoublyLinkedList<T> {
     const removedNode = this.tail!
 
     // check if the list has one node
-    if(this.length === 1) {
+    if (this.length === 1) {
       this.head = null
       this.tail = null
       this.length--
-      return removedNode;
+      return removedNode.value;
     }
-    
+
     // update tail to the previous node
     this.tail = this.tail!.prev
 
@@ -73,6 +75,59 @@ class DoublyLinkedList<T> {
     this.length--
 
     // return removed node
-    return removedNode;
+    return removedNode.value;
   }
+
+  // removes the first node
+  shift(): T | undefined {
+    // check if the linked list is empty
+    if (this.length === 0) return undefined
+
+    // save the removed node
+    const removedNode = this.head
+
+    // if the list has only one node
+    if (this.length === 1) {
+      this.head = null
+      this.tail = null
+    } else {
+      // change the head property to the next node 
+      this.head = this.head!.next
+
+      // set it's prev property to null
+      this.head!.prev = null
+    }
+
+    // decrement length property
+    this.length--
+
+    // return removed node value
+    return removedNode!.value
+  }
+
+  prepend(value: T): this {
+    // check if the list is empty
+    if(this.length === 0) {
+      return this.append(value)
+    }
+
+    // create a new node
+    const newNode = new Nodez<T>(value)
+
+    // let the previous property of the first node point to the new node
+    this.head!.prev = newNode
+
+    // let the new node point to the first node 
+    newNode!.next = this.head
+
+    // assign the head property to the new node
+    this.head = newNode
+
+    // increment length property
+    this.length++
+
+    // return this for method chaining
+    return this
+  }
+
 }
