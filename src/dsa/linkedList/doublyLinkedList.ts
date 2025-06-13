@@ -1,6 +1,6 @@
 class Nodez<T> {
   value: T
-  next: Nodez<T> | null = null
+  next: Nodez<T> | null  = null
   prev: Nodez<T> | null = null
   constructor(value: T) {
     this.value = value
@@ -25,7 +25,7 @@ class DoublyLinkedList<T> {
     const newNode = new Nodez<T>(val)
 
     // check if the list is empty
-    if(this.length === 0) {
+    if (this.length === 0) {
       this.head = newNode
       this.tail = newNode
     } else {
@@ -44,5 +44,35 @@ class DoublyLinkedList<T> {
 
     //return list
     return this;
+  }
+
+  pop(): Nodez<T> | undefined{
+    // check to see if the list is empty
+    if (this.length === 0) {
+      return undefined
+    }
+
+    // save the removed node
+    const removedNode = this.tail!
+
+    // check if the list has one node
+    if(this.length === 1) {
+      this.head = null
+      this.tail = null
+      this.length--
+      return removedNode;
+    }
+    
+    // update tail to the previous node
+    this.tail = this.tail!.prev
+
+    // set it's next property to null
+    this.tail!.next = null
+
+    // reduce the list's length
+    this.length--
+
+    // return removed node
+    return removedNode;
   }
 }
