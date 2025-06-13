@@ -156,23 +156,23 @@ class SinglyLinkedList<T> {
     return true;
   }
 
-  remove(index: number) {
+  remove(index: number): undefined | T {
     // check if index exists
     if (index < 0 || index >= this.length) return undefined;
 
     // check if index is 0
-    if(index === 0) {
+    if (index === 0) {
       return this.shift()
     }
 
     // check if the index is the last index
-    if(index === this.length - 1) {
-     return this.pop()
+    if (index === this.length - 1) {
+      return this.pop()
     }
 
     // get the node before the node we want to remove
     let prevNode = this.get(index - 1)
-    
+
     // get the removed node 
     const removedNode = prevNode!.next
 
@@ -187,6 +187,28 @@ class SinglyLinkedList<T> {
 
     // return removed node value
     return removedNode!.value
-    
+  }
+
+  reverse() {
+    // check if the linked list has only one node
+    if (this.length === 1) return this.head
+
+    // get the first node
+    let node = this.head
+
+    // swap the head and tail
+    this.head = this.tail
+    this.tail = node
+
+    let prev = null
+    let next;
+
+    // loop through the nodes and reverse them
+    for (let i = 0; i < this.length; i++) {
+      next = node!.next
+      node!.next = prev
+      prev = node
+      node = next 
+    }
   }
 }
