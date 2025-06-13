@@ -19,4 +19,30 @@ class DoublyLinkedList<T> {
       this.length = 1
     }
   }
+
+  append(val: T): this {
+    // create a new node
+    const newNode = new Nodez<T>(val)
+
+    // check if the list is empty
+    if(this.length === 0) {
+      this.head = newNode
+      this.tail = newNode
+    } else {
+      // connect the next property of the tail to the new node
+      this.tail!.next = newNode
+
+      // set the new node's prev property to the tail
+      newNode!.prev = this.tail
+
+      // set the tail property to the new node created
+      this.tail = newNode
+    }
+
+    // increment the length of linked list
+    this.length++
+
+    //return list
+    return this;
+  }
 }
