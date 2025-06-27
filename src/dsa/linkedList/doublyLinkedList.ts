@@ -175,7 +175,7 @@ class DoublyLinkedList<T> {
     let result = ''
 
     while (current) {
-      result += `${current.value} --> `;
+      result += `${current.value} <-> `;
       current = current.next!
     }
 
@@ -191,12 +191,7 @@ class DoublyLinkedList<T> {
     // check for invalid index
     if (index < 0 || index > this.length) return undefined
 
-    // if the list is empty
-    if (this.length === 0) {
-      return this.append(value)
-    }
-
-    // if the index is the same as the list's length
+    // if the index is the same as the list's length 
     if (index === this.length) {
       return this.append(value)
     }
@@ -265,6 +260,32 @@ class DoublyLinkedList<T> {
 
   }
 
+  // reverse 
+  reverse(): this {
+    // save the current head 
+    let current = this.head
+
+    // swap head and tail
+    this.head = this.tail
+    this.tail = current
+
+    // loop through and change pointers
+    while(current) {
+      // save the next node for traversal
+      let next = current.next
+
+      // swap pointers
+      current.next = current.prev
+      current.prev = next
+
+      // move current to next
+      current = next
+    }
+
+    // return list
+    return this 
+  }
+
 }
 
 const list = new DoublyLinkedList<number>(5)
@@ -275,5 +296,5 @@ list.append(11)
 list.insertAt(7, 10)
 list.insertAt(0, 2)
 list.insertAt(list.length, 12)
-console.log(list.length)
+list.reverse()
 console.log(list.print())

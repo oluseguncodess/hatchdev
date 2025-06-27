@@ -107,7 +107,7 @@ class DoublyLinkedList {
         let current = this.head;
         let result = '';
         while (current) {
-            result += `${current.value} --> `;
+            result += `${current.value} <-> `;
             current = current.next;
         }
         return result.slice(0, -5);
@@ -116,9 +116,6 @@ class DoublyLinkedList {
         const newNode = new Nodez(value);
         if (index < 0 || index > this.length)
             return undefined;
-        if (this.length === 0) {
-            return this.append(value);
-        }
         if (index === this.length) {
             return this.append(value);
         }
@@ -151,6 +148,18 @@ class DoublyLinkedList {
         this.length--;
         return removedNode.value;
     }
+    reverse() {
+        let current = this.head;
+        this.head = this.tail;
+        this.tail = current;
+        while (current) {
+            let next = current.next;
+            current.next = current.prev;
+            current.prev = next;
+            current = next;
+        }
+        return this;
+    }
 }
 const list = new DoublyLinkedList(5);
 list.append(6).append(7).append(8).append(9);
@@ -160,5 +169,5 @@ list.append(11);
 list.insertAt(7, 10);
 list.insertAt(0, 2);
 list.insertAt(list.length, 12);
-console.log(list.length);
+list.reverse();
 console.log(list.print());
