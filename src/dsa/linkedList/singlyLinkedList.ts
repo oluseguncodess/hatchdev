@@ -96,7 +96,8 @@ class SinglyLinkedList<T> {
     return this
   }
 
-  get(index: number): LNode<T> | undefined | null {
+  // get specific node by index
+  get(index: number): NodeC<T> | undefined {
     // check if we have the right index and if the index isn't greater than the length of the linked list
     if (index < 0 || index >= this.length) return undefined;
 
@@ -106,21 +107,19 @@ class SinglyLinkedList<T> {
       current = current!.next
       counter++
     }
-    return current
+    return current ?? undefined
   }
 
+  // set value of node 
   set(index: number, value: T): undefined | this {
-    // check for a valid index
-    if (index < 0 || index >= this.length) return undefined;
+    // get node 
+    const node = this.get(index)
 
-    let counter = 0
-    let current = this.head
-    while (counter < index) {
-      current = current!.next
-      counter++
-    }
+    // if node is undefined
+    if (!node) return undefined
 
-    current!.value = value
+    // change value
+    node.value = value
     return this;
   }
 
@@ -208,7 +207,7 @@ class SinglyLinkedList<T> {
       next = node!.next
       node!.next = prev
       prev = node
-      node = next 
+      node = next
     }
   }
 }

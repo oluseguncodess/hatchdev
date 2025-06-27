@@ -1,32 +1,34 @@
 "use strict";
-class LNode {
+class NodeC {
     constructor(value) {
         this.next = null;
         this.value = value;
     }
 }
-class SinglyLinkedList {
+class CircularSinglyLinkedList {
     constructor(initialValue) {
         this.head = null;
         this.tail = null;
         this.length = 0;
         if (initialValue != undefined) {
-            const newNode = new LNode(initialValue);
+            const newNode = new NodeC(initialValue);
             this.head = newNode;
             this.tail = newNode;
+            newNode.next = this.head;
             this.length = 1;
         }
     }
     push(value) {
         if (!this.head) {
-            const newNode = new LNode(value);
+            const newNode = new NodeC(value);
             this.head = newNode;
             this.tail = newNode;
         }
         else {
-            const newNode = new LNode(value);
+            const newNode = new NodeC(value);
             this.tail.next = newNode;
             this.tail = newNode;
+            newNode.next = this.head;
         }
         this.length++;
         return this;
@@ -42,10 +44,10 @@ class SinglyLinkedList {
         }
         else {
             let current = this.head;
-            while (current.next !== this.tail) {
+            while (current.next !== this.head) {
                 current = current.next;
             }
-            current.next = null;
+            current.next = this.head;
             this.tail = current;
         }
         this.length--;
@@ -61,19 +63,22 @@ class SinglyLinkedList {
         }
         else {
             this.head = this.head.next;
+            this.tail.next = this.head;
         }
         this.length--;
         return removedHeadNodeValue;
     }
     unshift(value) {
-        let newNode = new LNode(value);
+        let newNode = new NodeC(value);
         if (!this.head) {
             this.head = newNode;
             this.tail = newNode;
+            newNode.next = this.head;
         }
         else {
             newNode.next = this.head;
             this.head = newNode;
+            this.tail.next = this.head;
         }
         ;
         this.length++;
@@ -108,7 +113,7 @@ class SinglyLinkedList {
             this.push(value);
             return true;
         }
-        const newNode = new LNode(value);
+        const newNode = new NodeC(value);
         let counter = 0;
         let current = this.head;
         while (counter < index - 1) {
